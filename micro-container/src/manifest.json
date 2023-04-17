@@ -1,0 +1,132 @@
+{
+  "background_color": "#ffffff",
+  "categories": [
+    "health"
+  ],
+  "description": "PWA RoxFarma",
+  "dir": "ltr",
+  "display_override": [
+    "standalone",
+    "fullscreen"
+  ],
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "logo20.svg",
+      "type": "image/svg+xml",
+      "sizes": "20x20",
+      "purpose": "any"
+    },
+    {
+      "src": "logo29.svg",
+      "type": "image/svg+xml",
+      "sizes": "29x29",
+      "purpose": "any"
+    },
+    {
+      "src": "logo36.svg",
+      "type": "image/svg+xml",
+      "sizes": "36x36",
+      "purpose": "any"
+    },
+    {
+      "src": "logo40.svg",
+      "type": "image/svg+xml",
+      "sizes": "40x40",
+      "purpose": "any"
+    },
+    {
+      "src": "logo48.svg",
+      "type": "image/svg+xml",
+      "sizes": "48x48",
+      "purpose": "any"
+    },
+    {
+      "src": "logo50.svg",
+      "type": "image/svg+xml",
+      "sizes": "50x50",
+      "purpose": "any"
+    },
+    {
+      "src": "logo57.svg",
+      "type": "image/svg+xml",
+      "sizes": "57x57",
+      "purpose": "any"
+    },
+    {
+      "src": "logo58.svg",
+      "type": "image/svg+xml",
+      "sizes": "58x58",
+      "purpose": "any"
+    },
+    {
+      "src": "logo60.svg",
+      "type": "image/svg+xml",
+      "sizes": "60x60",
+      "purpose": "any"
+    },
+    {
+      "src": "logo72.svg",
+      "type": "image/svg+xml",
+      "sizes": "72x72",
+      "purpose": "any"
+    },
+    {
+      "src": "logo76.svg",
+      "type": "image/svg+xml",
+      "sizes": "76x76",
+      "purpose": "any"
+    },
+    {
+      "src": "logo80.svg",
+      "type": "image/svg+xml",
+      "sizes": "80x80",
+      "purpose": "any"
+    },
+    {
+      "src": "logo87.svg",
+      "type": "image/svg+xml",
+      "sizes": "87x87",
+      "purpose": "any"
+    },
+    {
+      "src": "logo96.svg",
+      "type": "image/svg+xml",
+      "sizes": "96x96",
+      "purpose": "any"
+    },
+    {
+      "src": "logo100.svg",
+      "type": "image/svg+xml",
+      "sizes": "100x100",
+      "purpose": "any"
+    },
+    {
+      "src": "logo114.svg",
+      "type": "image/svg+xml",
+      "sizes": "114x114",
+      "purpose": "any"
+    },
+    {
+      "src": "logo120.svg",
+      "type": "image/svg+xml",
+      "sizes": "120x120",
+      "purpose": "any"
+    },
+    {
+      "src": "logo144.svg",
+      "type": "image/svg+xml",
+      "sizes": "144x144",
+      "purpose": "any"
+    }
+  ],
+  "lang": "es-PE",
+  "name": "RoxFarma",
+  "orientation": "portrait",
+  "prefer_related_application": false,
+  "scope": "https://roxfarma.lilab.pe/",
+  "short_name": "RoxFarma",
+  "start_url": "https://roxfarma.lilab.pe/",
+  "id": "/",
+  "theme_color": "#2D9CDB"
+}

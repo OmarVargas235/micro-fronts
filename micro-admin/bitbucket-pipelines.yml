@@ -1,0 +1,108 @@
+image: node:10.15.3
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Installation
+          caches:
+            - node
+          script:
+            - npm install
+          artifacts:
+            - node_modules/**
+      - step:
+          name: Build
+          script:
+            - npm run-script build
+          artifacts:
+            - dist/** # Save build for next steps
+      - step:
+          name: Build image
+          image: python:3.7.10-alpine3.12
+          services:
+            - docker
+          script:
+            - pip3 install awscli==1.19.45
+            - TAG=$BITBUCKET_BUILD_NUMBER
+            - aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+            - aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+            - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+            - docker build -t ${DOCKER_REGISTRY}roxfarma-appadministracion .
+            - docker push ${DOCKER_REGISTRY}roxfarma-appadministracion
+      - step:
+          deployment: production
+          name: Deploy Production
+          script:
+            - TAG=$BITBUCKET_BUILD_NUMBER
+            - NAME=PROD
+            - scp -r docker-compose.yml $ssh_user@$ssh_host:/home/$ssh_user/app/administracion/docker-compose.yml
+            - pipe: atlassian/ssh-run:0.3.0
+              variables:
+                SSH_USER: $ssh_user
+                SERVER: $ssh_host
+                MODE: "script"
+                COMMAND: "deploy.sh"
+                ENV_VARS: >-
+                  AWS_KEY=${AWS_ACCESS_KEY_ID}
+                  AWS_SECRET=${AWS_SECRET_ACCESS_KEY}
+                  AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+                  AWS_ACCOUNT=${AWS_ACCOUNT}
+                  DOCKER_REGISTRY=${DOCKER_REGISTRY}
+            - pipe: atlassian/ssh-run:0.3.0
+              variables:
+                SSH_USER: $ssh_user
+                SERVER: $ssh_host
+                COMMAND: "export DOMAIN_APP=${DOMAIN_APP}; export DOCKER_REGISTRY=${DOCKER_REGISTRY};docker-compose -f /home/$ssh_user/app/administracion/docker-compose.yml up -d"
+    qa:
+      - step:
+          name: Installation
+          caches:
+            - node
+          script:
+            - npm install
+          artifacts:
+            - node_modules/**
+      - step:
+          name: Build
+          script:
+            - npm run-script build
+          artifacts:
+            - dist/**
+      - step:
+          name: Build image
+          image: python:3.7.10-alpine3.12
+          services:
+            - docker
+          script:
+            - pip3 install awscli==1.19.45
+            - TAG=$BITBUCKET_BUILD_NUMBER
+            - aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+            - aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+            - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+            - docker build -t ${DOCKER_REGISTRY}roxfarma-appadministracion .
+            - docker push ${DOCKER_REGISTRY}roxfarma-appadministracion
+      - step:
+          deployment: qa
+          name: Deploy QA
+          script:
+            - TAG=$BITBUCKET_BUILD_NUMBER
+            - NAME=DEV
+            - scp -r docker-compose.yml $ssh_user@$ssh_host:/home/$ssh_user/app/administracion/docker-compose.yml
+            - pipe: atlassian/ssh-run:0.3.0
+              variables:
+                SSH_USER: $ssh_user
+                SERVER: $ssh_host
+                MODE: "script"
+                COMMAND: "deploy.sh"
+                ENV_VARS: >-
+                  AWS_KEY=${AWS_ACCESS_KEY_ID}
+                  AWS_SECRET=${AWS_SECRET_ACCESS_KEY}
+                  AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+                  AWS_ACCOUNT=${AWS_ACCOUNT}
+                  DOCKER_REGISTRY=${DOCKER_REGISTRY}
+            - pipe: atlassian/ssh-run:0.3.0
+              variables:
+                SSH_USER: $ssh_user
+                SERVER: $ssh_host
+                COMMAND: "export VIRTUAL_HOST=${DOMAIN_APP}; export LETSENCRYPT_HOST=${DOMAIN_APP}; export LETSENCRYPT_EMAIL=${EMAIL}; export DOMAIN_APP=${DOMAIN_APP}; export DOCKER_REGISTRY=${DOCKER_REGISTRY};docker-compose -f /home/$ssh_user/app/administracion/docker-compose.yml up -d"

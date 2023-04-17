@@ -1,0 +1,18 @@
+version: "3"
+services:
+  appadministracion:
+    image: ${DOCKER_REGISTRY}roxfarma-appadministracion
+    restart: always
+    expose:
+      - "80"
+    environment:
+      - VIRTUAL_HOST=${DOMAIN_APP}
+      - LETSENCRYPT_HOST=${DOMAIN_APP}
+      - LETSENCRYPT_EMAIL=${EMAIL}
+volumes:
+  certs:
+  html:
+  vhostd:
+networks:
+  default:
+    name: roxfarma-network

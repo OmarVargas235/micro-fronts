@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="apple-mobile-web-app-title" content="RoxFarma" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+    />
+
+    <link rel="icon" href="./logo144.svg" />
+    <link rel="apple-touch-icon" href="./logo144.svg" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <title>RoxFarma</title>
+
+    <style>
+        .container-spinner {
+            position: fixed;
+            width: 100%;
+            min-height: 100vh;
+            background-color: rgba(254, 254, 254, .9);
+            top: 0;
+            z-index: 1100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ml-loader {
+            position: relative;
+            width: 70px;
+            height: 70px;
+        }
+
+        .ml-loader div {
+            -webkit-transform-origin: 32px 32px;
+            -ms-transform-origin: 32px 32px;
+            transform-origin: 32px 32px;
+            -webkit-animation: 1.2s opaque ease-in-out infinite both;
+            animation: 1.2s opaque ease-in-out infinite both;
+        }
+
+        .ml-loader div::after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 30px;
+            width: 8px;
+            height: 13px;
+            border-radius: 50%;
+            background-color: #0558A7;
+        }
+
+        .ml-loader div:nth-child(1) {
+            -webkit-transform: rotate(0);
+            -ms-transform: rotate(0);
+            transform: rotate(0);
+        }
+
+        .ml-loader div:nth-child(2) {
+            -webkit-transform: rotate(30deg);
+            -ms-transform: rotate(30deg);
+            transform: rotate(30deg);
+            -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+        }
+
+        .ml-loader div:nth-child(3) {
+            -webkit-transform: rotate(60deg);
+            -ms-transform: rotate(60deg);
+            transform: rotate(60deg);
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
+        .ml-loader div:nth-child(4) {
+            -webkit-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
+            -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+        }
+
+        .ml-loader div:nth-child(5) {
+            -webkit-transform: rotate(120deg);
+            -ms-transform: rotate(120deg);
+            transform: rotate(120deg);
+            -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+        }
+
+        .ml-loader div:nth-child(6) {
+            -webkit-transform: rotate(150deg);
+            -ms-transform: rotate(150deg);
+            transform: rotate(150deg);
+            -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+        }
+
+        .ml-loader div:nth-child(7) {
+            -webkit-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            transform: rotate(180deg);
+            -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+        }
+
+        .ml-loader div:nth-child(8) {
+            -webkit-transform: rotate(210deg);
+            -ms-transform: rotate(210deg);
+            transform: rotate(210deg);
+            -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s;
+        }
+
+        .ml-loader div:nth-child(9) {
+            -webkit-transform: rotate(240deg);
+            -ms-transform: rotate(240deg);
+            transform: rotate(240deg);
+            -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+        }
+
+        .ml-loader div:nth-child(10) {
+            -webkit-transform: rotate(270deg);
+            -ms-transform: rotate(270deg);
+            transform: rotate(270deg);
+            -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s;
+        }
+
+        .ml-loader div:nth-child(11) {
+            -webkit-transform: rotate(300deg);
+            -ms-transform: rotate(300deg);
+            transform: rotate(300deg);
+            -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+        }
+
+        .ml-loader div:nth-child(12) {
+            -webkit-transform: rotate(330deg);
+            -ms-transform: rotate(330deg);
+            transform: rotate(330deg);
+            -webkit-animation-delay: 1.1s;
+            animation-delay: 1.1s;
+        }
+
+        .ml-loader div:nth-child(13) {
+            -webkit-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            transform: rotate(360deg);
+            -webkit-animation-delay: 1.2s;
+            animation-delay: 1.2s;
+        }
+
+        @-webkit-keyframes opaque {
+            0%, 40%, 100% {
+                opacity: 0.1;
+            }
+
+            40% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes opaque {
+            0%, 40%, 100% {
+                opacity: 0.1;
+            }
+
+            40% {
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <!-- <script src="/env-config.js"></script> -->
+    <!--
+        Remove this if you only support browsers that support async/await.
+        This is needed by babel to share largeish helper code for compiling async/await in older
+        browsers. More information at https://github.com/single-spa/create-single-spa/issues/112
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.7/runtime.min.js"></script>
+    <!--
+        This CSP allows any SSL-enabled host and for arbitrary eval(), but you should limit these directives further to increase your app's security.
+        Learn more about CSP policies at https://content-security-policy.com/#directive
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src https: localhost:* ws://localhost:*; style-src 'unsafe-inline' https:; object-src 'none';">
+    <meta name="importmap-type" content="systemjs-importmap" />
+    <!-- If you wish to turn off import-map-overrides for specific environments (prod), uncomment the line below -->
+    <!-- More info at https://github.com/joeldenning/import-map-overrides/blob/master/docs/configuration.md#domain-list -->
+    <!-- <meta name="import-map-overrides-domains" content="denylist:prod.example.com" /> -->
+
+    <!-- Shared dependencies go into this import map. Your shared dependencies must be of one of the following formats:
+
+    1. System.register (preferred when possible) - https://github.com/systemjs/systemjs/blob/master/docs/system-register.md
+    2. UMD - https://github.com/umdjs/umd
+    3. Global variable
+
+    More information about shared dependencies can be found at https://single-spa.js.org/docs/recommended-setup#sharing-with-import-maps.
+    -->
+    <script type="systemjs-importmap">
+        {
+            "imports": {
+                "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js"
+            }
+        }
+    </script>
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js" as="script">
+
+    <!-- Add your organization's prod import map URL to this script's src  -->
+    <!-- <script type="systemjs-importmap" src="/importmap.json"></script> -->
+    <script type="systemjs-importmap" src="/micro-roxfarma.json"></script>
+    <% if (isLocal) { %>
+        <script type="systemjs-importmap">
+            {
+                "imports": {
+                "react": "https://cdn.jsdelivr.net/npm/react@17.0.1/umd/react.production.min.js",
+                "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@17.0.1/umd/react-dom.production.min.js",
+                "@roxfarma/root-config": "//localhost:9000/roxfarma-root-config.js",
+                "@roxfarma/admin": "//localhost:9001/roxfarma-admin.js",
+                "@roxfarma/seguridad": "//localhost:9002/roxfarma-seguridad.js",
+                "@roxfarma/servicios": "//localhost:9003/roxfarma-servicios.js"
+                }
+            }
+        </script>
+    <% } %>
+
+    <!--
+        If you need to support Angular applications, uncomment the script tag below to ensure only one instance of ZoneJS is loaded
+        Learn more about why at https://single-spa.js.org/docs/ecosystem-angular/#zonejs
+    -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/zone.js@0.11.3/dist/zone.min.js"></script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
+    <% if (isLocal) { %>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.js"></script>
+    <% } else { %>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
+    <% } %>
+</head>
+<body>
+    <noscript>
+        You need to enable JavaScript to run this app.
+    </noscript>
+
+    <div class='container-spinner' id="loader-container">
+        <div class="ml-loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <script>
+        System.import('@roxfarma/root-config');
+    </script>
+
+    <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
+</body>
+</html>

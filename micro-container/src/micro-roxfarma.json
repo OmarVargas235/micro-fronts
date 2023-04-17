@@ -1,0 +1,10 @@
+{
+  "imports": {
+    "@roxfarma/root-config": "https://roxfarma.lilab.pe/roxfarma-root-config.js",
+    "@roxfarma/seguridad": "https://seguridad-roxfarma.lilab.pe/roxfarma-seguridad.js",
+    "@roxfarma/servicios": "https://servicios-roxfarma.lilab.pe/roxfarma-servicios.js",
+    "@roxfarma/admin": "https://administracion-roxfarma.lilab.pe/roxfarma-admin.js",
+    "react": "https://cdn.jsdelivr.net/npm/react@17.0.1/umd/react.production.min.js",
+    "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@17.0.1/umd/react-dom.production.min.js"
+  }
+}
